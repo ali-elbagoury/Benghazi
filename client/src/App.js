@@ -4,7 +4,6 @@ import Sidebar from './components/Sidebar';
 import MapView from './components/MapView';
 
 function App() {
-  const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [filters, setFilters] = useState({
     search: '',
@@ -18,6 +17,7 @@ function App() {
 
   useEffect(() => {
     fetchProperties();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchProperties = async () => {
@@ -30,9 +30,8 @@ function App() {
       if (filters.minLandSize) queryParams.append('minLandSize', filters.minLandSize);
       if (filters.maxLandSize) queryParams.append('maxLandSize', filters.maxLandSize);
 
-      const response = await fetch(`http://localhost:5000/api/properties?${queryParams}`);
+      const response = await fetch(`/api/properties?${queryParams}`);
       const data = await response.json();
-      setProperties(data);
       setFilteredProperties(data);
     } catch (error) {
       console.error('Error fetching properties:', error);
